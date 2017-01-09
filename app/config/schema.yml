@@ -1,0 +1,38 @@
+# app/config/schema.yml
+
+generateId: false
+fieldVisibility: "protected"
+
+# annotationGenerators:
+#     - ApiPlatform\SchemaGenerator\AnnotationGenerator\PhpDocAnnotationGenerator
+#     # - ApiPlatform\SchemaGenerator\AnnotationGenerator\DoctrineOrmAnnotationGenerator
+#     - ApiPlatform\SchemaGenerator\AnnotationGenerator\ConstraintAnnotationGenerator
+#     - ApiPlatform\SchemaGenerator\AnnotationGenerator\ApiPlatformCoreAnnotationGenerator
+
+# The list of types and properties we want to use
+types:
+
+  Thing:
+    abstract: true
+    properties:
+      description: ~
+      name: ~
+      url: ~
+  CreativeWork:
+    parent: Thing
+    abstract: true
+    allProperties: false
+    properties:
+      description: ~
+      name: ~
+
+  RestrictedDiet:
+    properties:
+      name: ~
+  Recipe:
+    properties:
+      suitableForDiet:
+        range: RestrictedDiet
+        # cardinality: (0..*)
+      recipeCategory: ~
+      recipeCuisine: ~
