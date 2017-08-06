@@ -19,7 +19,6 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="order_")
  * @ApiResource(iri="http://schema.org/Order",
  *   collectionOperations={
- *     "get"={"method"="GET"},
  *     "post"={"method"="POST"},
  *     "my_orders"={"method"="GET", "route_name"="my_orders"}
  *   },

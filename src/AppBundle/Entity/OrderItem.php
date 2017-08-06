@@ -13,7 +13,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @see http://schema.org/OrderItem Documentation on Schema.org
  *
  * @ORM\Entity
- * @ApiResource(iri="http://schema.org/OrderItem")
+ * @ApiResource(iri="http://schema.org/OrderItem",
+ *   collectionOperations={},
+ *   itemOperations={
+ *     "get"={"method"="GET"}
+ *   }
+ * )
  */
 class OrderItem
 {
@@ -32,6 +37,13 @@ class OrderItem
      * @ORM\ManyToOne(targetEntity="Product")
      */
     private $product;
+
+    /**
+     * @var MenuItem
+     * @Groups({"order"})
+     * @ORM\ManyToOne(targetEntity="MenuItem")
+     */
+    private $menuItem;
 
     /**
      * @var int
@@ -119,6 +131,18 @@ class OrderItem
     public function getProduct()
     {
         return $this->product;
+    }
+
+    public function getMenuItem()
+    {
+        return $this->menuItem;
+    }
+
+    public function setMenuItem(MenuItem $menuItem)
+    {
+        $this->menuItem = $menuItem;
+
+        return $this;
     }
 
     /**
