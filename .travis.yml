@@ -37,6 +37,8 @@ install:
   - docker run -t -v $(pwd)/var/osrm:/data osrm/osrm-backend:v5.5.4 osrm-extract -p /opt/bicycle.lua /data/ex_i653FMk2VwCUGetCYpH2hR4hpNLKV.osm.pbf
   - docker run -t -v $(pwd)/var/osrm:/data osrm/osrm-backend:v5.5.4 osrm-contract /data/ex_i653FMk2VwCUGetCYpH2hR4hpNLKV.osrm
   - docker run -t -v $(pwd)/var/osrm:/data -d -p 5000:5000 osrm/osrm-backend:v5.5.4 osrm-routed /data/ex_i653FMk2VwCUGetCYpH2hR4hpNLKV.osrm
+  - wget https://github.com/FriendsOfPHP/PHP-CS-Fixer/releases/download/v2.3.1/php-cs-fixer.phar; fi
+  - composer global require phpstan/phpstan; fi
 
 before_script:
   - phpenv config-rm xdebug.ini
@@ -58,6 +60,10 @@ before_script:
   # Install JavaScript stuff
   - pm2 start pm2.config.js --env=test
   # - node_modules/.bin/webpack -p
+  # CS-fixer
+  - php-cs-fixer.phar fix --dry-run --diff --no-ansi; fi
+  # PHPStan
+  - phpstan analyse -c phpstan.neon --ansi src tests; fi
 
 script:
   # - curl 'http://localhost:5000/route/v1/bicycle/2.3706188,48.877821;2.385706,48.887031?overview=full'
